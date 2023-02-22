@@ -12,7 +12,8 @@
       "tls": "tls",
       "serverName": "vmess.sni"
     },
-    "tags":["vmess","h2"]
+    "tags":["vmess","h2"],
+    "zone":"asd"
   },
   {
     "protocol":"vless",

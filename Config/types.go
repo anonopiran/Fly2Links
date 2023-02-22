@@ -57,6 +57,7 @@ type ProfileType struct {
 	Transport TransportType    `json:"transport"`
 	Remark    string           `json:"remark"`
 	Tags      []string         `json:"tags"`
+	Zone      string           `json:"zone"`
 }
 
 // .............

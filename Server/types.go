@@ -6,7 +6,8 @@ import (
 )
 
 type ProfileRequest struct {
-	Id string `uri:"id" binding:"required,uuid"`
+	Id   string `uri:"id" binding:"required,uuid"`
+	Zone string `uri:"zone"`
 }
 type ProfileResultType struct {
 	Link   string   `json:"link"`
@@ -14,12 +15,12 @@ type ProfileResultType struct {
 	Tags   []string `json:"tags"`
 }
 
-func (v *ProfileResultType) FromLinker(lnk p2l.Linker) {
+func (v *ProfileResultType) FromLink(lnk p2l.LinkType) {
 	v.Link, _ = lnk.GetLink()
-	v.Remark = lnk.GetRemark()
-	t := lnk.GetTags()
+	v.Remark = lnk.Remark
+	t := lnk.Tags
 	if t != nil {
-		v.Tags = lnk.GetTags()
+		v.Tags = lnk.Tags
 	} else {
 		v.Tags = []string{}
 	}

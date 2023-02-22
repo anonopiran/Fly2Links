@@ -10,7 +10,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func vmessProfileLink(profile *config.ProfileType) (string, error) {
+func vmessProfileLink(profile *LinkType) (string, error) {
 	profileData := map[string]string{
 		"add":  profile.Address,
 		"port": fmt.Sprint(profile.Port),
@@ -51,7 +51,7 @@ func vmessProfileLink(profile *config.ProfileType) (string, error) {
 	jsonEnc := b64.StdEncoding.EncodeToString(jsonData)
 	return "vmess://" + jsonEnc, nil
 }
-func trojanVlessProfileLink(profile *config.ProfileType) (string, error) {
+func trojanVlessProfileLink(profile *LinkType) (string, error) {
 	link := fmt.Sprintf("%s://%s@%s:%d", profile.Protocol, profile.Id, profile.Address, profile.Port)
 	url_, _ := url.Parse(link)
 	query := url_.Query()

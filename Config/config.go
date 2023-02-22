@@ -28,14 +28,14 @@ func Config() *SettingsType {
 	if settingsInstance == nil {
 		lock.Lock()
 		defer lock.Unlock()
+		var err error
 		settingsInstance = &SettingsType{}
-		var err error = nil
 		if _, err_file := os.Stat(".env"); err_file == nil {
-			err = cleanenv.ReadConfig(".env", settingsInstance)
 			log.Info("found .env file")
+			err = cleanenv.ReadConfig(".env", settingsInstance)
 		} else {
-			err = cleanenv.ReadEnv(settingsInstance)
 			log.Info("no .env file found")
+			err = cleanenv.ReadEnv(settingsInstance)
 		}
 		if err != nil {
 			log.WithError(err).Panic("can not initiate configuration")

@@ -3,18 +3,16 @@ package server
 import (
 	config "Fly2Links/Config"
 	p2l "Fly2Links/Profile2Link"
-	"fmt"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
-var cfg *config.SettingsType
-var prf *[]config.ProfileType
-
 func Serve() {
+	cfg := config.Config()
+	prf := config.Profile()
 	route := gin.Default()
-	route.GET(cfg.PathPrefix+"/:id", func(c *gin.Context) {
+	route.GET(cfg.PathPrefix+"/:zone/:id", func(c *gin.Context) {
 		var req ProfileRequest
 		if err := c.ShouldBindUri(&req); err != nil {
 			c.JSON(400, gin.H{"msg": err})
@@ -26,23 +24,25 @@ func Serve() {
 		filterStr_ := c.Query("filter")
 		filter_ := strings.Split(filterStr_, ",")
 		type_ := c.Query("as")
-		fmt.Printf("hey %s", type_)
 		for _, pr := range *prf {
-			pr_ := p2l.LinkType{Profile: pr}
+			pr_ := p2l.LinkType(pr)
 			if filterStr_ != "" {
 				if !pr_.FilterTag(&filter_) {
 					continue
 				}
 			}
-			pr_.SetId(req.Id)
+			if !pr_.FilterZone(&req.Zone) {
+				continue
+			}
+			pr_.Id = req.Id
 			if addrs_ != "" {
-				pr_.SetAddress(addrs_)
+				pr_.Address = addrs_
 			}
 			if remarkPrefix_ != "" {
 				pr_.SetRemarkPrefix(remarkPrefix_)
 			}
 			rs := new(ProfileResultType)
-			rs.FromLinker(&pr_)
+			rs.FromLink(pr_)
 			*result = append(*result, *rs)
 		}
 		switch type_ {
@@ -57,8 +57,4 @@ func Serve() {
 		}
 	})
 	route.Run()
-}
-func init() {
-	cfg = config.Config()
-	prf = config.Profile()
 }
