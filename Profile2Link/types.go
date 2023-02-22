@@ -29,5 +29,5 @@ func (v *LinkType) FilterTag(tags *[]string) bool {
 	return false
 }
 func (v *LinkType) FilterZone(zone *string) bool {
-	return v.Zone == *zone
+	return (*zone == "-" && v.Zone == "") || v.Zone == *zone
 }
