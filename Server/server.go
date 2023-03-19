@@ -13,6 +13,10 @@ func Serve() {
 	cfg := config.Config()
 	prf := config.Profile()
 	route := gin.Default()
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowAllOrigins = true
+	corsConfig.AllowMethods = []string{"GET"}
+	route.Use(cors.New(corsConfig))
 	route.GET(cfg.PathPrefix+"/:zone/:id", func(c *gin.Context) {
 		var req ProfileRequest
 		if err := c.ShouldBindUri(&req); err != nil {
@@ -57,6 +61,5 @@ func Serve() {
 			c.String(200, ret)
 		}
 	})
-	route.Use(cors.Default())
 	route.Run()
 }
