@@ -5,6 +5,7 @@ import (
 	p2l "Fly2Links/Profile2Link"
 	"strings"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -56,5 +57,6 @@ func Serve() {
 			c.String(200, ret)
 		}
 	})
+	route.Use(cors.Default())
 	route.Run()
 }
