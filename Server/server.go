@@ -3,6 +3,7 @@ package server
 import (
 	config "Fly2Links/Config"
 	p2l "Fly2Links/Profile2Link"
+	b64 "encoding/base64"
 	"strings"
 
 	"github.com/gin-contrib/cors"
@@ -50,14 +51,16 @@ func Serve() {
 			rs.FromLink(pr_)
 			*result = append(*result, *rs)
 		}
+		ret := ""
+		for _, r_ := range *result {
+			ret += r_.Link + "\n"
+		}
 		switch type_ {
 		case "json":
 			c.JSON(200, result)
+		case "base":
+			c.String(200, b64.StdEncoding.EncodeToString([]byte(ret)))
 		default:
-			ret := ""
-			for _, r_ := range *result {
-				ret += r_.Link + "\n"
-			}
 			c.String(200, ret)
 		}
 	})
