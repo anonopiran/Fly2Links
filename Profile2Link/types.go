@@ -1,6 +1,10 @@
 package profile2link
 
-import config "Fly2Links/Config"
+import (
+	config "Fly2Links/Config"
+
+	"golang.org/x/exp/slices"
+)
 
 type LinkType config.ProfileType
 
@@ -29,5 +33,5 @@ func (v *LinkType) FilterTag(tags *[]string) bool {
 	return false
 }
 func (v *LinkType) FilterZone(zone *string) bool {
-	return (*zone == "-" && v.Zone == "") || v.Zone == *zone
+	return slices.Contains(v.Zone, *zone)
 }
