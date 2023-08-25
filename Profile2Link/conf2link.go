@@ -67,6 +67,10 @@ func trojanVlessProfileLink(profile *LinkType) (string, error) {
 	query.Add("serviceName", profile.Transport.ServiceName)
 	query.Add("security", profile.Transport.Tls)
 	query.Add("sni", profile.Transport.Sni)
+	query.Add("fp", string(profile.Transport.FingerPrint))
+	if profile.Transport.AllowInsecure {
+		query.Add("allowInsecure", "1")
+	}
 	url_.RawQuery = query.Encode()
 	url_.Fragment = profile.Remark
 	return url_.String(), nil

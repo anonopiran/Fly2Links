@@ -3,12 +3,12 @@ module Fly2Links
 go 1.19
 
 require (
+	github.com/gin-contrib/cors v1.4.0
 	github.com/ilyakaznacheev/cleanenv v1.4.2
 	github.com/sirupsen/logrus v1.9.0
 )
 
 require (
-	github.com/gin-contrib/cors v1.4.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect

@@ -17,6 +17,21 @@ const (
 	Grpc TransportEnumType = "grpc"
 )
 
+type FingerPrintEnumType string
+
+const (
+	Chrome     FingerPrintEnumType = "chrome"
+	Firefox    FingerPrintEnumType = "firefox"
+	Safari     FingerPrintEnumType = "safari"
+	Ios        FingerPrintEnumType = "ios"
+	Android    FingerPrintEnumType = "android"
+	Edge       FingerPrintEnumType = "edge"
+	X360       FingerPrintEnumType = "360"
+	Qq         FingerPrintEnumType = "qq"
+	Random     FingerPrintEnumType = "random"
+	Randomized FingerPrintEnumType = "randomized"
+)
+
 type ProtocolEnumType string
 
 const (
@@ -35,17 +50,19 @@ type SettingsType struct {
 }
 
 type TransportType struct {
-	Net          TransportEnumType `json:"network"`
-	HeaderType   string            `json:"headerType"`
-	Host         string            `json:"host"`
-	Path         string            `json:"path"`
-	Seed         string            `json:"seed"`
-	QuicSecurity string            `json:"security"`
-	Key          string            `json:"key"`
-	Mode         string            `json:"mode"`
-	ServiceName  string            `json:"serviceName"`
-	Tls          string            `json:"tls"`
-	Sni          string            `json:"serverName"`
+	Net           TransportEnumType   `json:"network"`
+	HeaderType    string              `json:"headerType"`
+	Host          string              `json:"host"`
+	Path          string              `json:"path"`
+	Seed          string              `json:"seed"`
+	QuicSecurity  string              `json:"security"`
+	Key           string              `json:"key"`
+	Mode          string              `json:"mode"`
+	ServiceName   string              `json:"serviceName"`
+	Tls           string              `json:"tls"`
+	Sni           string              `json:"serverName"`
+	AllowInsecure bool                `json:"allowInsecure"`
+	FingerPrint   FingerPrintEnumType `json:"fingerPrint"`
 }
 type ProfileType struct {
 	Protocol  ProtocolEnumType `json:"protocol"`
